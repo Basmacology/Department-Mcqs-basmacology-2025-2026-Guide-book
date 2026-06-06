@@ -350,6 +350,69 @@
 .btn-global {
     animation: pulse 2s infinite;
 }
+.edited-questions-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 30px;
+    direction: ltr; /* لضمان بقاء النقطة على اليسار */
+    font-family: 'ADLaM Display', sans-serif;
+    width: 100%;
+}
+
+.static-text {
+    color: #5D5445;
+    cursor: default;
+    opacity: 0.8;
+}
+
+.edited-q-link {
+    cursor: pointer;
+    font-weight: bold;
+    color: #8c7b65;
+    animation: pulseText 2s infinite ease-in-out;
+    transition: color 0.2s;
+    display: inline-block;
+}
+
+.edited-q-link:hover {
+    color: #2c2c2c;
+}
+
+@keyframes pulseText {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulsing-dot {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    flex-shrink: 0;
+}
+.pulsing-dot .dot {
+    width: 100%;
+    height: 100%;
+    background-color: #b8ac99;
+    border-radius: 50%;
+    position: absolute;
+}
+.pulsing-dot .ring {
+    width: 100%;
+    height: 100%;
+    background-color: #b8ac99;
+    border-radius: 50%;
+    position: absolute;
+    animation: radiate 1.5s infinite ease-out;
+}
+@keyframes radiate {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(3.5); opacity: 0; }
+}
 
     </style>
 </head>
@@ -361,9 +424,13 @@
 </div>
 
         
-        <div class="control-panel">
+                <div class="control-panel">
             <button class="btn-global" id="toggle-all-btn" onclick="toggleAllAnswers()">🫆 Activate Basmacology Mode 🫆</button>
+        </div>
 
+        <div class="edited-questions-container">
+            <span class="static-text">| Edited</span>
+            <span class="edited-q-link" onclick="goToQuestion('11_3')">[Q 3 Ch 11]</span>
         </div>
 
         <div id="quiz-container"></div>
@@ -4214,6 +4281,19 @@
         }
 
         renderQuiz();
+        function goToQuestion(id) {
+            const targetQuestion = document.querySelector(`.question-card[data-id="${id}"]`);
+            if (targetQuestion) {
+                targetQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                targetQuestion.style.transition = "box-shadow 0.5s";
+                targetQuestion.style.boxShadow = "0 0 20px rgba(184, 172, 153, 0.8)";
+                
+                setTimeout(() => {
+                    targetQuestion.style.boxShadow = "0 4px 10px rgba(0,0,0,0.05)";
+                }, 2000);
+            }
+        }
 
     </script>
     <script>
