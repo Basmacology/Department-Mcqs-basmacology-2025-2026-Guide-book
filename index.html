@@ -341,6 +341,15 @@
     cursor: default;
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.btn-global {
+    animation: pulse 2s infinite;
+}
 
     </style>
 </head>
@@ -353,7 +362,8 @@
 
         
         <div class="control-panel">
-            <button class="btn-global" id="toggle-all-btn" onclick="toggleAllAnswers()">Activate Basmacology Mode</button>
+            <button class="btn-global" id="toggle-all-btn" onclick="toggleAllAnswers()">🫆 Activate Basmacology Mode 🫆</button>
+
         </div>
 
         <div id="quiz-container"></div>
@@ -4178,7 +4188,8 @@
                 });
             });
 
-            btn.innerText = allRevealed ? "Deactivate Basmacology Mode" : "Activate Basmacology Mode";
+            btn.innerText = allRevealed ? "❌ Deactivate Basmacology Mode ❌" : "🫆 Activate Basmacology Mode 🫆";
+
         }
 
         // دالة مخصصة لمسح تقدم فصل معين بصرياً ومن الذاكرة بدون إعادة تحميل كامل الصفحة
