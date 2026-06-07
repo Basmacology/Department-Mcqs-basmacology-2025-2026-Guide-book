@@ -117,6 +117,22 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid #e8e8e8;
         }
+        .verified-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+.question-card.verified .verified-badge {
+    display: block;
+}
+
+.question-card.verified .question-text {
+    padding-right: 25px;
+}
 
         .question-text {
             font-size: 1.15rem;
@@ -511,7 +527,7 @@
         <div class="dot"></div>
     </div>
     <div class="disclaimer-text">
-&rlm;        <strong>وجب التنويه:</strong> الإجابات ليست نموذجية من القسم والقسم لم ينزل إجابات، من أجل تنقية الإجابات وتحسينها نرجو من أي شخص لاحظ أي سؤال إجابته خاطئة أن يعلمنا <a href="https://wa.me/201068978862" target="_blank" class="report-link">report</a>
+        <strong>وجب التنويه:</strong> الإجابات ليست نموذجية من القسم والقسم لم ينزل إجابات، من أجل تنقية الإجابات وتحسينها نرجو من أي شخص لاحظ أي سؤال إجابته خاطئة أن يعلمنا <a href="https://wa.me/201068978862" target="_blank" class="report-link">report</a>
     </div>
 </div>
 
@@ -519,6 +535,15 @@
     </div>
 
     <script>
+        const verifiedQuestions = [
+    "4_8", "11_8", "4_1", "5_6", "4_6", "8_8", "8_7", "9_5", "6_3", "6_7", 
+    "9_10", "5_8", "5_11", "4_3", "8_3", "11_1", "4_7", "4_2", "4_5", "4_9", 
+    "4_10", "5_1", "5_2", "5_3", "5_4", "5_5", "5_7", "5_9", "5_12", "5_13", 
+    "8_2", "8_4", "8_5", "8_6", "8_9", "8_10", "9_1", "9_2", "9_3", "9_4", 
+    "9_6", "9_9", "10_1", "10_2", "10_3", "10_4", "10_5", "10_6", "10_7", "10_8", 
+    "10_9", "10_10", "11_2", "11_3", "11_5", "11_6", "11_7", "11_9", "11_10", "15_3"
+];
+
         const chaptersData = [ 
             { id: 1, title: "Chapter 1: Introduction to Psychology (7 Mcq)", questions: [
   {
@@ -4190,8 +4215,19 @@
 
                 chapter.questions.forEach((qData) => {
                     const card = document.createElement('div');
-                    card.className = 'question-card';
-                    card.dataset.id = qData.id;
+card.className = 'question-card';
+card.dataset.id = qData.id;
+
+// إنشاء وإضافة علامة التوثيق بتصميم فيسبوك الهادئ والمريح للعين
+const badge = document.createElement('div');
+badge.className = 'verified-badge';
+badge.innerHTML = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#4A90E2"/><path d="M16.5 8.5l-6 6-3-3" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+card.appendChild(badge);
+
+// فحص رقم السؤال لإظهار العلامة وتطبيق مسافة الأمان للنص
+if (verifiedQuestions.includes(qData.id)) {
+    card.classList.add('verified');
+}
 
                     const questionText = document.createElement('div');
                     questionText.className = 'question-text';
