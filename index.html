@@ -4414,6 +4414,10 @@
                 }, 2000);
             }
         }
+    window.addEventListener('online', function() {
+
+    window.location.href = window.location.pathname + '?v=' + new Date().getTime();
+});
 
     </script>
     <script>
