@@ -496,6 +496,14 @@
     background-color: #1F2D3D;
     color: #ffffff;
 }
+body.revision-mode-active .explanation,
+body.revision-mode-active .basmaga-box,
+body.revision-mode-active .basmaga-text,
+body.revision-mode-active .wrong-title-box,
+body.revision-mode-active .wrong-item,
+body.revision-mode-active .wrong-option-box {
+    display: none !important;
+}
 
     </style>
 </head>
@@ -508,8 +516,10 @@
 
         
                 <div class="control-panel">
-            <button class="btn-global" id="toggle-all-btn" onclick="toggleAllAnswers()">🫆 Activate Basmacology Mode 🫆</button>
-        </div>
+    <button class="btn-global" id="toggle-revision-btn" onclick="toggleRevisionMode()">📝 Activate Revision Mode 📝</button>
+    <button class="btn-global" id="toggle-all-btn" onclick="toggleAllAnswers()">🫆 Activate Basmacology Mode 🫆</button>
+</div>
+
 
         <div class="edited-questions-container">
             <span class="static-text">| Edited</span>
@@ -4215,7 +4225,13 @@
                     noteDiv.innerText = chapter.note;
                     quizContainer.appendChild(noteDiv);
                 }
-
+              if (chapter.questions.length > 0) {
+                    const resetBtn = document.createElement('button');
+                    resetBtn.className = 'chapter-reset-btn';
+                    resetBtn.innerText = 'إعادة تعيين إجابات الفصل';
+                    resetBtn.onclick = () => clearChapterProgress(chapter.id);
+                    quizContainer.appendChild(resetBtn);
+              }
                 chapter.questions.forEach((qData) => {
     const card = document.createElement('div');
     card.className = 'question-card';
@@ -4312,13 +4328,7 @@
                     quizContainer.appendChild(card);
                 });
 
-                if (chapter.questions.length > 0) {
-                    const resetBtn = document.createElement('button');
-                    resetBtn.className = 'chapter-reset-btn';
-                    resetBtn.innerText = 'إعادة تعيين إجابات الفصل';
-                    resetBtn.onclick = () => clearChapterProgress(chapter.id);
-                    quizContainer.appendChild(resetBtn);
-                }
+                
 
                 if (chapter.id !== chaptersData[chaptersData.length - 1].id) {
                     const divider = document.createElement('hr');
@@ -4420,6 +4430,19 @@
 
     window.location.href = window.location.pathname + '?v=' + new Date().getTime();
 });
+let revisionMode = false;
+function toggleRevisionMode() {
+    revisionMode = !revisionMode;
+    const btn = document.getElementById('toggle-revision-btn');
+    
+    if (revisionMode) {
+        document.body.classList.add('revision-mode-active');
+        btn.innerText = "❌ Deactivate Revision Mode ❌";
+    } else {
+        document.body.classList.remove('revision-mode-active');
+        btn.innerText = "📝 Activate Revision Mode 📝";
+    }
+}
 
     </script>
     <script>
